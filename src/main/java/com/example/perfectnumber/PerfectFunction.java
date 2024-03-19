@@ -8,16 +8,16 @@ import javafx.scene.layout.HBox;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerfectNumberFinder {
+public class PerfectFunction {
 
     private final int num;
     private final int cnt;
     private final List<Thread> threads;
-    private final List<ProgressIndicator> CircleThingies;
+    private final List<ProgressIndicator> progressIndicator;
     private final TextArea resultArea;
     private final HBox progressBox;
-    private int ctrLPerfect = 0;
-    private int ctrMPerfect = 0;
+    private int counterLess = 0;
+    private int counterMore = 0;
 
     private class PerfectNumberTask implements Runnable {
 
@@ -32,31 +32,31 @@ public class PerfectNumberFinder {
         @Override
         public void run() {
             for (int i = start; i <= end; i++) {
-                if (CheckNum(i) == 1) {
-                    int maybePerfect = i;
-                    Platform.runLater(() -> resultArea.appendText(maybePerfect + " is a perfect number.\n"));
-                }else if(CheckNum(i) == 0)
-                    ctrLPerfect++;
+                if (Checker(i) == 1) {
+                    int isPerfect = i;
+                    Platform.runLater(() -> resultArea.appendText(isPerfect + " is a perfect number.\n"));
+                }else if(Checker(i) == 0)
+                    counterLess++;
                 else
-                    ctrMPerfect++;
+                    counterMore++;
 
                 double progress = ((double) (i - start + 1) / (end - start + 1));
                 updateProgress(progress);
             }
-            Platform.runLater(() ->resultArea.appendText("There were "+ ctrLPerfect+" Less Perfect Numbers!\nThere were "+ctrMPerfect+" More Perfect Numbers"));
+
         }
 
         private void updateProgress(double progress) {
             int index = threads.indexOf(Thread.currentThread());
-            Platform.runLater(() -> CircleThingies.get(index).setProgress(progress));
+            Platform.runLater(() -> progressIndicator.get(index).setProgress(progress));
         }
     }
 
-    public PerfectNumberFinder(int num, int cnt, TextArea resultArea, HBox progressBox) {
+    public PerfectFunction(int num, int cnt, TextArea resultArea, HBox progressBox) {
         this.num = num;
         this.cnt = cnt;
         this.threads = new ArrayList<>();
-        this.CircleThingies = new ArrayList<>();
+        this.progressIndicator = new ArrayList<>();
         this.resultArea = resultArea;
         this.progressBox = progressBox;
     }
@@ -70,7 +70,7 @@ public class PerfectNumberFinder {
             threads.add(thread);
             ProgressIndicator CircleProgress = new ProgressIndicator(0);
             CircleProgress.setPadding(new Insets(0, 50, 0 , 0) );
-            CircleThingies.add(CircleProgress);
+            progressIndicator.add(CircleProgress);
             Platform.runLater(() -> progressBox.getChildren().add(CircleProgress));
             start = end + 1;
             thread.start();
@@ -83,12 +83,16 @@ public class PerfectNumberFinder {
                 e.printStackTrace();
             }
         }
+
+        synchronized (this){
+            Platform.runLater(() ->resultArea.appendText("There were "+ counterLess +" that were LESS Perfect Numbers!\nThere were "+ counterMore +" that were MORE Perfect Numbers!"));
+        }
     }
 
-    private int CheckNum(int n) {
-        if(sumOfFactors(n) == n)
+    private int Checker(int n) {
+        if(Factors(n) == n)
             return 1;
-        else if(sumOfFactors(n) < n){
+        else if(Factors(n) < n){
             return 0;
         }
         else
@@ -96,7 +100,7 @@ public class PerfectNumberFinder {
 
     }
 
-    private int sumOfFactors(int n) {
+    private int Factors(int n) {
         int sum = 0;
         for (int i = 1; i <= n / 2; i++) {
             if (n % i == 0) {

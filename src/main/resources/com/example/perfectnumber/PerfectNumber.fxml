@@ -8,23 +8,39 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.perfectnumber.PerfectNumberFinderController">
+<VBox alignment="CENTER" stylesheets="@styles.css" spacing="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.perfectnumber.PerfectController">
     <children>
-        <TextField alignment="CENTER" prefHeight="25.0" prefWidth="405.0" text="LET US FIND YOUR PERFECT NUMBER!">
+        <Label alignment="CENTER" prefHeight="25.0" prefWidth="405.0" text="PERFECT NUMBER?">
             <font>
-                <Font name="Impact" size="24.0" />
+                <Font name="Lucida Sans Unicode" size="30.0" />
             </font>
-        </TextField>
-        <HBox spacing="10">
-            <Label prefHeight="17.0" prefWidth="130.0" text="Enter a number:" />
+        </Label>
+        <HBox spacing="10" alignment="CENTER">
+            <Label prefHeight="17.0" prefWidth="130.0" text="Enter a number:">
+                <font>
+                    <Font name="Lucida Sans Unicode" size="15.0" />
+                </font>
+            </Label>
             <TextField fx:id="numField" />
         </HBox>
-        <HBox spacing="10">
-            <Label text="Enter number of threads:" />
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Enter number of threads:">
+                <font>
+                    <Font name="Lucida Sans Unicode" size="15.0" />
+                </font>
+            </Label>
             <TextField fx:id="threadField" />
         </HBox>
-        <Button onAction="#startFindingPerfectNumbers" text="Start" />
+        <Button onAction="#startFindingPerfectNumbers" text="Start">
+            <font>
+                <Font name="Lucida Sans Unicode" size="15.0" />
+            </font>
+        </Button>
+        <TextArea fx:id="resultArea" prefHeight="200">
+            <font>
+                <Font name="Lucida Sans Unicode" size="14.0"/>
+            </font>
+        </TextArea>
         <HBox fx:id="progressBox" />
-        <TextArea fx:id="resultArea" prefHeight="200" />
     </children>
 </VBox>

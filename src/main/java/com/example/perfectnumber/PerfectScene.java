@@ -5,13 +5,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class PerfectNumberFinderScene extends Application {
+public class PerfectScene extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("PNF.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("PerfectNumber.fxml"));
         primaryStage.setTitle("Perfect Number Finder");
-        primaryStage.setScene(new Scene(root, 1000, 400));
+        primaryStage.setScene(new Scene(root, 700, 500));
         primaryStage.show();
     }
 

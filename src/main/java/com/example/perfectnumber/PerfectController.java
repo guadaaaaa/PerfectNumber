@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
 
-public class PerfectNumberFinderController {
+public class PerfectController {
 
     @FXML
     private TextField numField, threadField;
@@ -16,7 +16,7 @@ public class PerfectNumberFinderController {
     @FXML
     private TextArea resultArea;
 
-    private PerfectNumberFinder finder;
+    private PerfectFunction finder;
 
     public void initialize() {
         resultArea.setEditable(false);
@@ -32,22 +32,18 @@ public class PerfectNumberFinderController {
                 throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
-            showErrorAlert("There aint no negative amount of threads.");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Fill required fields");
+            alert.showAndWait();
             return;
         }
 
         resultArea.clear();
         progressBox.getChildren().clear();
 
-        finder = new PerfectNumberFinder(num, cnt, resultArea, progressBox);
+        finder = new PerfectFunction(num, cnt, resultArea, progressBox);
         finder.findPerfectNumbers();
-    }
-
-    private void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
